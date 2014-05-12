@@ -1,0 +1,75 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+#
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+#
+# Modified to make a template file for a multi-binary package with separated
+# build-arch and build-indep targets  by Bill Allombert 2001
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+%:
+	dh $@ --parallel
+
+override_dh_auto_configure:
+	dh_auto_configure -- --disable-all-plugins \
+		--mandir=\$${prefix}/share/man \
+		--localstatedir=/var --sysconfdir=/etc \
+		--with-perl-bindings="INSTALLDIRS=vendor" \
+		--disable-static \
+		--without-libstatgrab \
+		--without-included-ltdl \
+		--enable-aggregation \
+		--enable-apache \
+		--enable-conntrack \
+		--enable-contextswitch \
+		--enable-cgroups \
+		--enable-cpu \
+		--enable-cpufreq \
+		--enable-df \
+		--enable-disk \
+		--enable-dns \
+		--enable-ethstat \
+		--enable-hddtemp \
+		--enable-interface \
+		--enable-ipmi \
+		--enable-iptables \
+		--enable-irq \
+		--enable-load \
+		--enable-logfile \
+		--enable-md \
+		--enable-memory \
+		--enable-mysql \
+		--enable-nginx \
+		--enable-numa \
+		--enable-python \
+		--enable-processes \
+		--enable-protocols \
+		--enable-swap \
+		--enable-syslog \
+		--enable-table \
+		--enable-tail \
+		--enable-tcpconns \
+		--enable-thermal \
+		--enable-varnish \
+		--enable-vmem \
+		--enable-write-riemann \
+		--enable-write-graphite \
+		--enable-match_empty_counter \
+		--enable-match_hashed \
+		--enable-match_regex \
+		--enable-match_timediff \
+		--enable-match_value \
+		--enable-target_notification \
+		--enable-target_replace \
+		--enable-target_scale \
+		--enable-target_set \
+		--enable-target_v5upgrade

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -eu -o pipefail
+
+APP_ROOT=$(dirname $0)
+TMP_DIR=/tmp/collectd_debian.$$
+
+mkdir -p $TMP_DIR
+
+cleanup() {
+	rm -fr $TMP_DIR > /dev/null 2>&1
+}
+trap cleanup EXIT
+
+echo "Cloning local repo to $TMP_DIR"
+git clone -q --local $APP_ROOT $TMP_DIR/collectd
+
+echo "Running build.sh"
+(cd $TMP_DIR/collectd; ./build.sh)
+
+echo "Creating original tarball"
+(cd $TMP_DIR/collectd; tar --exclude ./debian --exclude-vcs -czf $TMP_DIR/collectd_5.4.1-celtra.orig.tar.gz ./)
+
+echo "Building Debian package"
+(cd $TMP_DIR/collectd; debuild -us -uc)
+
+echo "Copy files from $TMP_DIR then continue for cleanup"
+read

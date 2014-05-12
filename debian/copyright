@@ -1,0 +1,20 @@
+This work was packaged for Debian by:
+
+    Viljem Skornik <viljem@celtra.com> on Wed, 16 Apr 2014 12:59:33 +0000
+
+It was downloaded from http://collectd.org
+
+Upstream Authors:
+	Core Developer:
+	Florian Forster <octo@verplant.org>
+
+	For individual credits, see AUTHORS.
+
+Copyright:
+	Florian Forster <octo@verplant.org>
+
+License:
+	Have a look at http://collectd.org.
+
+The Debian packaging is Copyright (C) 2014 Viljem Skornik <viljem@celtra.com>
+and is licensed under the GPL version 3, see "/usr/share/common-licenses/GPL-3".

@@ -1,0 +1,14 @@
+Source: collectd
+Section: admin
+Priority: extra
+Maintainer: Viljem Skornik <viljem@celtra.com>
+Build-Depends: debhelper (>= 7.0.50~), libvarnishapi-dev, libglib2.0-dev (>=2.24), libperl-dev, libprotobuf-c0-dev, libpcap0.8-dev, libopenipmi-dev, libltdl-dev, iptables-dev, protobuf-c-compiler
+Standards-Version: 3.9.1
+Homepage: http://collectd.org
+
+Package: collectd
+Architecture: any
+Depends: libc6, python, libpcap0.8, libprotobuf-c0, ${misc:Depends}
+Description: Minimal stripped down version of collectd
+ Stripped down minimal version of collectd, it sill includes a bunch
+ of plugins, but dependencies should be installed manually.

@@ -25,6 +25,15 @@ src/collectd.conf
 src/config.h
 src/libcollectdclient/libcollectdclient.pc
 src/stamp-h1
+.pc
+
+# debian stuff
+debian/*.log
+debian/*.debhelper
+debian/files
+debian/substvars
+debian/patches
+debian/tmp
 
 # make stuff:
 *.la
