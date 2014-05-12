@@ -297,11 +297,11 @@ static int df_read (void)
 
 		if (values_absolute)
 		{
-			df_submit_one (disk_name, "df_complex", "free",
+			df_submit_one (disk_name, "bytes", "free",
 				(gauge_t) (blk_free * blocksize));
-			df_submit_one (disk_name, "df_complex", "reserved",
+			df_submit_one (disk_name, "bytes", "reserved",
 				(gauge_t) (blk_reserved * blocksize));
-			df_submit_one (disk_name, "df_complex", "used",
+			df_submit_one (disk_name, "bytes", "used",
 				(gauge_t) (blk_used * blocksize));
 		}
 
@@ -309,11 +309,11 @@ static int df_read (void)
 		{
 			if (statbuf.f_blocks > 0)
 				{
-				df_submit_one (disk_name, "percent_bytes", "free",
+				df_submit_one (disk_name, "bytes", "free_percent",
 					(gauge_t) ((float_t)(blk_free) / statbuf.f_blocks * 100));
-				df_submit_one (disk_name, "percent_bytes", "reserved",
+				df_submit_one (disk_name, "bytes", "reserved_percent",
 					(gauge_t) ((float_t)(blk_reserved) / statbuf.f_blocks * 100));
-				df_submit_one (disk_name, "percent_bytes", "used",
+				df_submit_one (disk_name, "bytes", "used_percent",
 					(gauge_t) ((float_t)(blk_used) / statbuf.f_blocks * 100));
 				}
 			else return (-1);
@@ -340,22 +340,22 @@ static int df_read (void)
 			{
 				if (statbuf.f_files > 0)
 				{
-					df_submit_one (disk_name, "percent_inodes", "free",
+					df_submit_one (disk_name, "inodes", "free_percent",
 						(gauge_t) ((float_t)(inode_free) / statbuf.f_files * 100));
-					df_submit_one (disk_name, "percent_inodes", "reserved",
+					df_submit_one (disk_name, "inodes", "reserved_percent",
 						(gauge_t) ((float_t)(inode_reserved) / statbuf.f_files * 100));
-					df_submit_one (disk_name, "percent_inodes", "used",
+					df_submit_one (disk_name, "inodes", "used_percent",
 						(gauge_t) ((float_t)(inode_used) / statbuf.f_files * 100));
 				}
 				else return (-1);
 			}
 			if (values_absolute)
 			{
-				df_submit_one (disk_name, "df_inodes", "free",
+				df_submit_one (disk_name, "inodes", "free",
 						(gauge_t) inode_free);
-				df_submit_one (disk_name, "df_inodes", "reserved",
+				df_submit_one (disk_name, "inodes", "reserved",
 						(gauge_t) inode_reserved);
-				df_submit_one (disk_name, "df_inodes", "used",
+				df_submit_one (disk_name, "inodes", "used",
 						(gauge_t) inode_used);
 			}
 		}
