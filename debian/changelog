@@ -1,3 +1,9 @@
+collectd (5.4.1-celtra-6) unstable; urgency=low
+
+  * Updating with latest changes.
+
+ -- Viljem Skornik <viljem@celtra.com>  Mon, 12 May 2014 13:05:42 +0000
+
 collectd (5.4.1-celtra-1) unstable; urgency=low
 
   * Initial release
