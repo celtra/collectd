@@ -271,6 +271,7 @@ static int memory_read (void)
 	long long mem_buffered = 0;
 	long long mem_cached = 0;
 	long long mem_free = 0;
+	long long mem_total = 0;
 
 	if ((fh = fopen ("/proc/meminfo", "r")) == NULL)
 	{
@@ -285,7 +286,7 @@ static int memory_read (void)
 		long long *val = NULL;
 
 		if (strncasecmp (buffer, "MemTotal:", 9) == 0)
-			val = &mem_used;
+			val = &mem_total;
 		else if (strncasecmp (buffer, "MemFree:", 8) == 0)
 			val = &mem_free;
 		else if (strncasecmp (buffer, "Buffers:", 8) == 0)
@@ -310,13 +311,14 @@ static int memory_read (void)
 				sstrerror (errno, errbuf, sizeof (errbuf)));
 	}
 
-	if (mem_used >= (mem_free + mem_buffered + mem_cached))
+	if (mem_total >= (mem_free + mem_buffered + mem_cached))
 	{
-		mem_used -= mem_free + mem_buffered + mem_cached;
+		mem_used = mem_total - (mem_free + mem_buffered + mem_cached);
 		memory_submit ("used",     mem_used);
 		memory_submit ("buffered", mem_buffered);
 		memory_submit ("cached",   mem_cached);
 		memory_submit ("free",     mem_free);
+		memory_submit ("total",    mem_total);
 	}
 /* #endif KERNEL_LINUX */
 
