@@ -348,7 +348,7 @@ static Msg *riemann_notification_to_protobuf (struct riemann_host *host, /* {{{ 
 	for (i = 0; i < riemann_tags_num; i++)
 		riemann_event_add_tag (event, riemann_tags[i]);
 
-	format_name (service_buffer, sizeof (service_buffer),
+	format_my_name (service_buffer, sizeof (service_buffer),
 			/* host = */ "", n->plugin, n->plugin_instance,
 			n->type, n->type_instance);
 	event->service = strdup (&service_buffer[1]);
@@ -453,7 +453,7 @@ static Event *riemann_value_to_protobuf (struct riemann_host const *host, /* {{{
 			event->metric_sint64 = (int64_t) vl->values[index].counter;
 	}
 
-	format_name (name_buffer, sizeof (name_buffer),
+	format_my_name (name_buffer, sizeof (name_buffer),
 			/* host = */ "", vl->plugin, vl->plugin_instance,
 			vl->type, vl->type_instance);
 	if (host->always_append_ds || (ds->ds_num > 1))
