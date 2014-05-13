@@ -48,6 +48,7 @@ struct mysql_database_s /* {{{ */
 	char *pass;
 	char *database;
 	char *socket;
+	char *prefix;
 	int   port;
 
 	_Bool master_stats;
@@ -84,6 +85,7 @@ static void mysql_database_free (void *arg) /* {{{ */
 	sfree (db->socket);
 	sfree (db->instance);
 	sfree (db->database);
+	sfree (db->prefix);
 	sfree (db);
 } /* }}} void mysql_database_free */
 
@@ -126,6 +128,7 @@ static int mysql_config_database (oconfig_item_t *ci) /* {{{ */
 	db->database = NULL;
 	db->socket   = NULL;
 	db->con      = NULL;
+	db->prefix   = NULL;
 
 	/* trigger a notification, if it's not running */
 	db->slave_io_running  = 1;
@@ -169,6 +172,8 @@ static int mysql_config_database (oconfig_item_t *ci) /* {{{ */
 			status = cf_util_get_boolean (child, &db->slave_stats);
 		else if (strcasecmp ("SlaveNotifications", child->key) == 0)
 			status = cf_util_get_boolean (child, &db->slave_notif);
+		else if (strcasecmp ("Prefix", child->key) == 0)
+			status = cf_util_get_string(child, &db->prefix);
 		else
 		{
 			WARNING ("mysql plugin: Option `%s' not allowed here.", child->key);
@@ -285,12 +290,18 @@ static MYSQL *getconnection (mysql_database_t *db)
 
 static void set_host (mysql_database_t *db, char *buf, size_t buflen)
 {
-	if ((db->host == NULL)
-			|| (strcmp ("", db->host) == 0)
-			|| (strcmp ("localhost", db->host) == 0))
-		sstrncpy (buf, hostname_g, buflen);
+	if (db->prefix != NULL) {
+		sstrncpy (buf, db->prefix, buflen);
+	}
 	else
-		sstrncpy (buf, db->host, buflen);
+	{
+		if ((db->host == NULL)
+				|| (strcmp ("", db->host) == 0)
+				|| (strcmp ("localhost", db->host) == 0))
+	 		sstrncpy (buf, hostname_g, buflen);
+		else
+			sstrncpy (buf, db->host, buflen);
+	}
 } /* void set_host */
 
 static void submit (const char *type, const char *type_instance,
