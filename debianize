@@ -1,8 +1,7 @@
 #!/bin/bash
-
 set -eu -o pipefail
 
-APP_ROOT=$(dirname $0)
+APP_ROOT=$(dirname $(readlink -e $0))
 TMP_DIR=/tmp/collectd_debian.$$
 
 mkdir -p $TMP_DIR
